@@ -18,8 +18,8 @@ int main (int,char**)
 {
 	const float fs = 250;
     const float mains = 50;
-	Iir::RBJ::IIRNotch iirnotch;
-	iirnotch.setup(fs,mains);
+	Iir::Butterworth::BandStop<2> iirnotch;
+	iirnotch.setup(fs,mains,2);
 
 	FILE* f = fopen("hr.dat","wt");
 	if (!f) {

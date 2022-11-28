@@ -6,7 +6,7 @@
 #include "math.h"
 
 #include <stdio.h>
-#include <vector.h>
+#include <vector>
 #include <assert.h>
 
 void assertEqual(float a, float b) {
