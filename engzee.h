@@ -153,7 +153,7 @@ class Engzee {
                 float dSamples = (float)(lastRelativeQRStimestamp - index);
                 lastRelativeQRStimestamp = index;
                 float hr = 60*fs / dSamples;
-                printf("HR = %f\n",hr);
+                hrcallback.hasHR(hr);
             }
             firstDetection = false;
             counter = 0;
