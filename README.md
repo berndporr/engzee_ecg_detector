@@ -26,7 +26,7 @@ struct MyCallback : HRCallback {
 
 Create an instance of the callback and the detector:
 ```
-MyCallback callback(f);
+MyCallback callback;
 Engzee engzee(fs,callback);
 ```
 
@@ -36,9 +36,10 @@ Call the detector sample by sample:
 engzee.detect(a);
 ```
 
-This will then call the heartrate callback whenever a
+This will then call the callback whenever a
 new heartrate is available.
 
 # Credit
 
 Bernd Porr
+

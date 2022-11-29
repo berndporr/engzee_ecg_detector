@@ -1,3 +1,19 @@
+/***
+ * C++ implementation of 
+ *
+ * W. Engelse and C. Zeelenberg, “A single scan algorithm for QRS detection 
+ * and feature extraction”, IEEE Comp. in Cardiology, vol. 6, pp. 37-42, 1979 
+ * with modifications A. Lourenco, H. Silva, P. Leite, R. Lourenco and A. Fred,
+ * “Real Time Electrocardiogram Segmentation for Finger Based ECG Biometrics”, 
+ * BIOSIGNALS 2012, pp. 49-54, 2012.
+ *
+ * Apache License
+ * Version 2.0, January 2004
+ * http://www.apache.org/licenses/
+ *
+ * (C) 2022, Bernd Porr <mail@berndporr.me.uk>
+ *
+ ***/
 #ifndef ENGZEE_H
 #define ENGZEE_H
 
