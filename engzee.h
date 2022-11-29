@@ -53,12 +53,20 @@ struct Fir {
         return output;
 	}
 
-    inline float max(int timesteps = -1) const {
-        if (-1 == timesteps) {
-            return *std::max_element(buffer.begin(),buffer.end());
+    inline float max(const int timesteps = -1) const {
+        int endpoint;
+        if ( (timesteps < 0) || (timesteps > (int)buffer.size() ) ) {
+            endpoint = (int)buffer.size();
         } else {
-            return *std::max_element(buffer.begin(),buffer.begin()+timesteps);
-        } 
+            endpoint = timesteps;
+        }
+        float max = 0;
+        for (int i = 0; i < endpoint; i++) {
+            if (buffer[i] > max) {
+                max = buffer[i];
+            }
+        }
+        return max;
     }
 
     inline float average() const {
@@ -73,13 +81,36 @@ struct Fir {
 	std::deque<float> buffer;
 };
 
+/**
+ * @brief Heartrate detector callback interface
+ * This interface establishes the communication between
+ * the main program and the detector. The main program
+ * needs to create an instance of this interface
+ * and register it with the Engzee class.
+ */
 struct HRCallback {
+    /**
+     * @brief Callback which is called whenever the heartrate has been determined
+     * 
+     * @param hr The heartrate in beats per minute.
+     */
     virtual void hasHR(float hr) = 0;
 };
 
+/**
+ * @brief The EngZee heartrate detector class
+ * This class performs continous heartrate detection on a stream of
+ * ECG data.
+ */
 class Engzee {
     public:
 
+/**
+ * @brief Construct a new Engzee object
+ * 
+ * @param samplingrate The sampling rate in Hz in the region of 250Hz..300Hz.
+ * @param callback An instancce of the HRCallback class
+ */
     Engzee(float samplingrate, HRCallback& callback) : hrcallback(callback) {
         fs = samplingrate;
         ms200 = (int)(0.2*fs);
@@ -104,7 +135,7 @@ class Engzee {
             s2ctr --;
         } else if (haveQRS && (lastThresQRStimestamp < ms200)) {
             // The last QRS complex is less than 200ms away
-            newM5 = 0.6f * past.max();
+            newM5 = 0.6f * past.max(lastThresQRStimestamp);
             if (newM5 > 1.5f * MM.buffer[1]) {
                 newM5 = 1.1f * MM.buffer[1];
             }
@@ -181,6 +212,8 @@ class Engzee {
         lastThresQRStimestamp++;
         lastRelativeQRStimestamp++;
     }
+
+    private:
 
     Fir lowhighpass;
     Fir MM;
