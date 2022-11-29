@@ -32,6 +32,7 @@ cpphr = np.loadtxt("hr.dat")
 plt.figure()
 plt.plot(heart_rate,label="py")
 plt.plot(cpphr[2:],label="cpp")
+plt.ylabel("heartrate / beats per minute")
 plt.legend()
 
 plt.show()
