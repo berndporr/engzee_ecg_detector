@@ -1,12 +1,10 @@
 # engzee_ecg_detector
-C++ implementation of the Python Engzee detector (https://github.com/berndporr/py-ecg-detectors).
 
-Engelse and Zeelenberg
-----------------------
+C++ implementation of: W. Engelse and C. Zeelenberg, “A single scan algorithm for QRS detection and feature extraction”, IEEE Comp. in Cardiology, vol. 6, pp. 37-42, 1979 with modifications A. Lourenco, H. Silva, P. Leite, R. Lourenco and A. Fred, “Real Time Electrocardiogram Segmentation for Finger Based ECG Biometrics”, BIOSIGNALS 2012, pp. 49-54, 2012.
 
-Implementation of W. Engelse and C. Zeelenberg, “A single scan algorithm for QRS detection and feature extraction”, IEEE Comp. in Cardiology, vol. 6, pp. 37-42, 1979 with modifications A. Lourenco, H. Silva, P. Leite, R. Lourenco and A. Fred, “Real Time Electrocardiogram Segmentation for Finger Based ECG Biometrics”, BIOSIGNALS 2012, pp. 49-54, 2012.
+Based on the Python version of the EngZee detector (https://github.com/berndporr/py-ecg-detectors) initially written by Luis Howell.
 
-# Usage
+## Usage
 
 The detector is a header only:
 ```
@@ -30,14 +28,23 @@ MyCallback callback;
 Engzee engzee(fs,callback);
 ```
 
-Call the detector sample by sample:
-
+Call the detector sample by sample for example from an ADC
+callback:
 ```
-engzee.detect(a);
+engzee.detect(ecg);
 ```
+where the `ecg`-samples should be in mV and the mains (50 or 60Hz) needs
+to be removed, for example with a butterworth filter.
 
-This will then call the callback whenever a
-new heartrate is available.
+## Demo
+
+Run:
+```
+cmake .
+make
+./demo
+```
+and it will print the heartrate from an example ECG.
 
 # Credit
 
