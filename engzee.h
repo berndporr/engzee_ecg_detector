@@ -71,7 +71,6 @@ struct Fir {
 
 	std::vector<float> coefficients;
 	std::deque<float> buffer;
-	unsigned      offset = 0;
 };
 
 struct HRCallback {
@@ -116,9 +115,9 @@ class Engzee {
         } else if (haveQRS && (lastThresQRStimestamp > ms200) && (lastThresQRStimestamp < ms1200)) {
             // We are now past the 200ms and lower the threshold at every timestep
             const float dy = 0.4f / (float)(ms1200 - ms200);
-            float weighting = 1.0f - dy * (float)lastThresQRStimestamp;
+            float weighting = 1.0f - dy * (float)(lastThresQRStimestamp - ms200);
             M = MM.average() * weighting;
-        } else if (haveQRS && (lastThresQRStimestamp > ms1200)) {
+        } else if (haveQRS && (lastThresQRStimestamp >= ms1200)) {
             // We are now beyond 1.2sec and we keep the threshold at 0.6 of the maxima buffer
             M = 0.6f * MM.average();
         }
@@ -159,7 +158,9 @@ class Engzee {
         if (counter > neg_threshold) {
             float max = 0.0;
             int index = 0;
-            for(int i = 0; i < (lastThresQRStimestamp + (int)(fs*0.01)); i++) {
+            for(int i = 0; 
+                ( i < (lastThresQRStimestamp + neg_threshold) ) && ( i < (int)past.buffer.size() ); 
+                i++) {
                 if (past.buffer[i] > max) {
                     index = i;
                     max = past.buffer[i];
