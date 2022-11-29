@@ -30,7 +30,8 @@ heart_rate = 60.0/(intervals/float(fs))
 cpphr = np.loadtxt("hr.dat")
 
 plt.figure()
-plt.plot(heart_rate)
-plt.plot(cpphr[2:])
+plt.plot(heart_rate,label="py")
+plt.plot(cpphr[2:],label="cpp")
+plt.legend()
 
 plt.show()
