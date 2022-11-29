@@ -6,7 +6,7 @@ Based on the Python version of the EngZee detector (https://github.com/berndporr
 
 ## Usage
 
-The detector is a header only:
+The detector is header-only:
 ```
 include "engzee.h"
 ```
@@ -38,15 +38,23 @@ to be removed, for example with a butterworth filter.
 
 ## Demo
 
+Install the IIR filter library (https://github.com/berndporr/iir1)
+which is used to remove the mains interference.
+
 Run:
 ```
 cmake .
 make
 ./demo
 ```
-and it will print the heartrate from an example ECG.
+and it will print the heartrate from an example ECG and
+save it to `hr.dat` which can be plotted for example
+gnuplot or the script `plot_hr.py`.
+
+If you have the python detector installed then you can
+compare its output with that from this detector:
+`compare_cpp_and_python_detector.py`
 
 # Credit
 
 Bernd Porr
-
