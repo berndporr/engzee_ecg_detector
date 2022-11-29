@@ -55,6 +55,8 @@ If you have the python detector installed then you can
 compare its output with that from this detector:
 `compare_cpp_and_python_detector.py`
 
+![alt tag](hrcomp.png)
+
 # Credit
 
 Bernd Porr
